@@ -1,6 +1,20 @@
 # Container image that runs your code
 FROM openapx/rbatch:latest-ubuntu
 
+# install dependencies build
+RUN apt-get install -y --no-install-recommends gdebi-core 
+
+
+# install Posit/R-Studio Workbench (Open Souce edition)
+COPY --chmod=755 scripts/install_workbench.sh /scripts/install_workbench.sh
+RUN /scripts/install_workbench.sh
+
+
+# register steps when starting container instance
+COPY --chmod=755 scripts/entrypoint.sh /scripts/entrypoint.sh
+CMD /scripts/entrypoint.sh
+
+
 
 
 
