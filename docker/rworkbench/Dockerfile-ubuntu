@@ -9,10 +9,14 @@ RUN apt-get install -y --no-install-recommends gdebi-core
 COPY --chmod=755 scripts/install_workbench.sh /scripts/install_workbench.sh
 RUN /scripts/install_workbench.sh
 
+# right now Posit/R-Studio Workbench is exposed on port 8787
+# should move this to 80 without ssl and 443 with ssl using httpd and mod_rewrite
+EXPOSE 8787
 
 # register steps when starting container instance
 COPY --chmod=755 scripts/entrypoint.sh /scripts/entrypoint.sh
-CMD /scripts/entrypoint.sh
+ENTRYPOINT /scripts/entrypoint.sh
+
 
 
 
