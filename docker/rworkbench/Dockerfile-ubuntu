@@ -1,0 +1,48 @@
+# Start with the latest rbatch
+FROM openapx/rbatch:latest-ubuntu
+
+
+# -- add license file to root directory
+COPY LICENSE /LICENSE-rworkbench
+RUN  chmod u+r-wx,g+r-wx,o+r-wx /LICENSE-rworkbench
+
+
+# -- configuration files
+#    note: this is the input location for Shell scripts below
+
+COPY libs /opt/openapx/config/rworkbench/
+
+RUN find /opt/openapx/config/rworkbench -type f -exec chmod u+r-wx,g+r-wx,o-rwx {} \; && \
+    find /opt/openapx/config/rworkbench -type d -exec chmod u+rx-w,g+rx-w,o-rwx {} \;
+
+
+
+# -- scripted sequence
+#    1) add binary library dependencies
+#    2) install workbench
+#    3) clean up
+
+COPY --chmod=755 scripts/rworkbench/bin-libs.sh scripts/rworkbench/install_workbench.sh /scripts/rworkbench/
+RUN /scripts/rworkbench/bin-libs.sh && \
+    /scripts/rworkbench/install_workbench.sh && \
+    rm -Rf /scripts /sources
+
+
+# -- configure container to run Workbench
+EXPOSE 8787
+
+COPY --chmod=755 scripts/rworkbench/entrypoint.sh /entrypoint.sh
+ENTRYPOINT /entrypoint.sh
+
+
+# -- add any additional utilities
+COPY --chmod=755 scripts/rworkbench/rworkbench_adduser.sh /opt/openapx/utilities/
+
+RUN find /opt/openapx/utilities -type f -exec chmod u+rx-w,g+rx-w,o-rwx {} \; && \
+    find /opt/openapx/utilities -type d -exec chmod u+rx-w,g+rx-w,o-rwx {} \;
+
+
+
+
+
+
