@@ -2,24 +2,37 @@
 
 
 # -- set up install environment
-mkdir -p /sources/install/workbench
-
-
-# -- install system dependencies
-apt-get install -y --no-install-recommends gdebi-core
+echo "-- set up script scaffolding"
+mkdir -p /sources/rworkbench
 
 
 # -- install Open Source verison of Posit/R-Studio Workbench
+echo "-- install Posit/R-Studio Workbench (open source license)"
 
-# download Posit workbench (Open Source license) for Ubuntu
-cd /sources/install/workbench
-wget --quiet https://download2.rstudio.org/server/jammy/amd64/rstudio-server-2024.04.2-764-amd64.deb
+# - download Posit workbench (Open Source license) for Ubuntu
+
+XSOURCE=rstudio-server-2024.04.2-764-amd64.deb
+
+echo "   downloading ${XSOURCE}" 
+wget --quiet -P /sources/rworkbench https://download2.rstudio.org/server/jammy/amd64/${XSOURCE}
+
+
+_MD5=($(md5sum /sources/rworkbench/${XSOURCE}))
+_SHA256=($(sha256sum /sources/rworkbench/${XSOURCE}))
+
+echo "   ${XSOURCE} (MD5 ${_MD5} / SHA-256 ${_SHA256})"
+
+unset _MD5
+unset _SHA256
+
 
 # install the server
-gdebi --non-interactive rstudio-server-2024.04.2-764-amd64.deb
+echo "   installing ${XSOURCE}"
+gdebi --non-interactive /sources/rworkbench/${XSOURCE}
 
 # stop workbench service ... if it was already started
-setvice rstudio-server stop
+echo "   stopping rstudio-server service (if automatically started)"
+service rstudio-server stop
 
 # -- end of install Open Source verison of Posit/R-Studio Workbench
 
@@ -34,9 +47,11 @@ WORKBENCH_R=$(ls /opt/R | grep "^[0-9].[0-9].[0-9]$" | sort -r | head -n1)
 # set up symbolic link as a nice to have
 ln -s /opt/R/${WORKBENCH_R} /opt/R/workbench
 
+echo "-- Posit/R-Studio Workbench default R version ${WORKBENCH_R}"
 
 
 # -- rserver.conf updates
+echo "-- Configuring Posit/R-Studio Workbench defaults"
 
 # comment pointer to R if it exists ... not really tested
 sed -e '/rsession-which-r/ s/^#*/#/' -i /etc/rstudio/rserver.conf
@@ -57,6 +72,14 @@ EOT
 # -- end of rserver.conf updates
 
 
+
+# create R workbench user group
+echo "-- Configuring Posit/R-Studio Workbench groups"
+groupadd rworkbench
+
+
+
 # -- clean-up
+echo "-- Clean up"
 rm -Rf /sources
 
