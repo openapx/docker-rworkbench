@@ -32,6 +32,8 @@ $ docker run -it --entrypoint=/bin/bash openapx/rworkbench:latest-ubuntu
 
 If you intend to manually start the Posit/R-Studio Workbench service, include the port mapping option `-p <port>:8787`.
 
+Images currently available are based on Ubuntu, Debian, Fedora and Rocky Linux.
+
 <br>
 
 ### Basic configuration
