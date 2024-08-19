@@ -10,7 +10,7 @@ RUN  chmod u+r-wx,g+r-wx,o+r-wx /LICENSE-rworkbench
 # -- configuration files
 #    note: this is the input location for Shell scripts below
 
-COPY libs /opt/openapx/config/rworkbench/
+COPY libs-ubuntu /opt/openapx/config/rworkbench/
 
 RUN find /opt/openapx/config/rworkbench -type f -exec chmod u+r-wx,g+r-wx,o-rwx {} \; && \
     find /opt/openapx/config/rworkbench -type d -exec chmod u+rx-w,g+rx-w,o-rwx {} \;
@@ -22,8 +22,8 @@ RUN find /opt/openapx/config/rworkbench -type f -exec chmod u+r-wx,g+r-wx,o-rwx 
 #    2) install workbench
 #    3) clean up
 
-COPY --chmod=755 scripts/rworkbench/bin-libs.sh scripts/rworkbench/install_workbench.sh /scripts/rworkbench/
-RUN /scripts/rworkbench/bin-libs.sh && \
+COPY --chmod=755 scripts/rworkbench/install_workbench.sh /scripts/rworkbench/
+RUN /opt/openapx/utilities/bin-libs.sh /opt/openapx/config/rbatch/libs-ubuntu && \
     /scripts/rworkbench/install_workbench.sh && \
     rm -Rf /scripts /sources
 

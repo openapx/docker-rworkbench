@@ -1,5 +1,5 @@
 
-name: Build and publish Posit/R-Studio R Workbench (Open Source) Docker image
+name: Ubuntu -- Build and publish Posit/R-Studio R Workbench (Open Source) Docker image
 
 on:
   push:
