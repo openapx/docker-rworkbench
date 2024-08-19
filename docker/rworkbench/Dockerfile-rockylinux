@@ -1,5 +1,5 @@
 # Start with the latest rbatch
-FROM openapx/rbatch:latest-ubuntu
+FROM openapx/rbatch:latest-rockylinux
 
 
 # -- dockerfile scaffolding
@@ -15,7 +15,7 @@ RUN  chmod u+r-wx,g+r-wx,o+r-wx /LICENSE-rworkbench && \
 #    note: this is the input location for Shell scripts below
 #    note: wildcard trick on libs-* is to copy if it exists
 
-COPY libs-ubunt* /opt/openapx/config/rworkbench/
+COPY libs-rockylinu* /opt/openapx/config/rworkbench/
 
 RUN find /opt/openapx/config/rworkbench -type f -exec chmod u+r-wx,g+r-wx,o-rwx {} \; && \
     find /opt/openapx/config/rworkbench -type d -exec chmod u+rx-w,g+rx-w,o-rwx {} \;
@@ -28,8 +28,8 @@ RUN find /opt/openapx/config/rworkbench -type f -exec chmod u+r-wx,g+r-wx,o-rwx 
 #    3) clean up
 
 COPY --chmod=755 scripts/rworkbench/install_workbench.sh /scripts/rworkbench/
-RUN /opt/openapx/utilities/bin-libs.sh /opt/openapx/config/rworkbench/libs-ubuntu && \
-    /scripts/rworkbench/install_workbench.sh https://download2.rstudio.org/server/jammy/amd64/rstudio-server-2024.04.2-764-amd64.deb && \
+RUN /opt/openapx/utilities/bin-libs.sh /opt/openapx/config/rworkbench/libs-rockylinux && \
+    /scripts/rworkbench/install_workbench.sh https://download2.rstudio.org/server/rhel9/x86_64/rstudio-server-rhel-2024.04.2-764-x86_64.rpm && \
     rm -Rf /scripts /sources
 
 

@@ -1,5 +1,5 @@
 
-name: Build and publish Posit/R-Studio R Workbench (Open Source) Docker image
+name: Fedora -- Build and publish Posit/R-Studio R Workbench (Open Source) Docker image
 
 on:
   push:
@@ -8,11 +8,15 @@ on:
       - dev
       - development
     paths:
-      - !README.md
+      - '!README.md'
+      - '.github/workflows/build-docker-rworkbench-fedora.yml'
+      - 'docker/rworkbench/Dockerfile-fedora'
+      - 'scripts/rworkbench/*'
+      - 'libs-fedora'
   workflow_dispatch:
 
 env:
-  OS_TAG: "ubuntu"
+  OS_TAG: "fedora"
   BRANCH_NAME: ${{ github.head_ref || github.ref_name }} 
 
 
