@@ -8,7 +8,11 @@ on:
       - dev
       - development
     paths:
-      - !README.md
+      - '!README.md'
+      - '.github/workflows/build-docker-rworkbench-ubuntu.yml'
+      - 'docker/rworkbench/Dockerfile-ubuntu'
+      - 'scripts/rworkbench/*'
+      - 'lib-ubuntu'
   workflow_dispatch:
 
 env:
