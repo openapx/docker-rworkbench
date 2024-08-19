@@ -1,5 +1,5 @@
 
-name: Ubuntu -- Build and publish Posit/R-Studio R Workbench (Open Source) Docker image
+name: Rocky Linux -- Build and publish Posit/R-Studio R Workbench (Open Source) Docker image
 
 on:
   push:
@@ -9,14 +9,14 @@ on:
       - development
     paths:
       - '!README.md'
-      - '.github/workflows/build-docker-rworkbench-ubuntu.yml'
-      - 'docker/rworkbench/Dockerfile-ubuntu'
+      - '.github/workflows/build-docker-rworkbench-rockylinux.yml'
+      - 'docker/rworkbench/Dockerfile-rockylinux'
       - 'scripts/rworkbench/*'
-      - 'libs-ubuntu'
+      - 'libs-rockylinux'
   workflow_dispatch:
 
 env:
-  OS_TAG: "ubuntu"
+  OS_TAG: "rockylinux"
   BRANCH_NAME: ${{ github.head_ref || github.ref_name }} 
 
 

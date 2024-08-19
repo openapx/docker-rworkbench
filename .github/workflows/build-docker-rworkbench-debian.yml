@@ -1,5 +1,5 @@
 
-name: Ubuntu -- Build and publish Posit/R-Studio R Workbench (Open Source) Docker image
+name: Debian -- Build and publish Posit/R-Studio R Workbench (Open Source) Docker image
 
 on:
   push:
@@ -9,14 +9,14 @@ on:
       - development
     paths:
       - '!README.md'
-      - '.github/workflows/build-docker-rworkbench-ubuntu.yml'
-      - 'docker/rworkbench/Dockerfile-ubuntu'
+      - '.github/workflows/build-docker-rworkbench-debian.yml'
+      - 'docker/rworkbench/Dockerfile-debian'
       - 'scripts/rworkbench/*'
-      - 'libs-ubuntu'
+      - 'libs-debian'
   workflow_dispatch:
 
 env:
-  OS_TAG: "ubuntu"
+  OS_TAG: "debian"
   BRANCH_NAME: ${{ github.head_ref || github.ref_name }} 
 
 
