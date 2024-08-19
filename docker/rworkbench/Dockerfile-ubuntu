@@ -23,7 +23,7 @@ RUN find /opt/openapx/config/rworkbench -type f -exec chmod u+r-wx,g+r-wx,o-rwx 
 #    3) clean up
 
 COPY --chmod=755 scripts/rworkbench/install_workbench.sh /scripts/rworkbench/
-RUN /opt/openapx/utilities/bin-libs.sh /opt/openapx/config/rbatch/libs-ubuntu && \
+RUN /opt/openapx/utilities/bin-libs.sh /opt/openapx/config/rworkbench/libs-ubuntu && \
     /scripts/rworkbench/install_workbench.sh && \
     rm -Rf /scripts /sources
 
